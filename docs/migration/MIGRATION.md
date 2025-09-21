@@ -18,7 +18,7 @@ projeto/
 A migração ocorrerá de modo incremental, módulo a módulo, para reduzir riscos e permitir entregas e validações parciais. Cada módulo migrado será integrado ao sistema novo e validado antes da migração do próximo.
 1. **Dados:** Será realizado um mapeamento completo das tabelas, campos e relacionamentos do banco de dados atual. Serão criadas migrations no Laravel compatíveis com a estrutura vigente, aproveitando recursos de versionamento e rollback.
 2. **Campos e Validações:** Os campos de cada entidade serão revisados. Todas as validações presentes no escopo a ser migrado (tipos, obrigatoriedade, formatos, regras de negócio) serão mapeadas e implementadas utilizando as regras de validação do Laravel em Requests e Service Layers.
-3. **Padrões e estrutura do projeto:** Para que o projeto mantenha sua consistência e qualidade durante as transições, foi aderido um manual de padronização do projeto que deve servir de guia para todos os desenvolvedores do projeto. Disponível nesse link: [AQUI]().
+3. **Padrões e estrutura do projeto:** Para que o projeto mantenha sua consistência e qualidade durante as transições, foi aderido um manual de padronização do projeto que deve servir de guia para todos os desenvolvedores do projeto. Disponível nesse link: [AQUI](../wiki/README.md).
 
 ## Etapas
 1. **Análise do Sistema Atual**  
