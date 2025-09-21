@@ -24,7 +24,7 @@ Content-Type: application/json
 
 {
   "nome": "Fornecedor Exemplo",
-  "cnpj": "12345678000199",
+  "cnpj": ""32.692.566/00-18"",
   "email": "contato@exemplo.com"
 }
 ```
