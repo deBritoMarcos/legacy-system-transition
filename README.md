@@ -1,61 +1,90 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+#  JML Test – Migração projeto legado
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Projeto criado como desafio técnico de migração de um projeto legado em PHP estruturado para Laravel 12. 
 
-## About Laravel
+O projeto possui a seguinte estrutura de pastas:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```
+projeto/
+├── app/                # Pasta contento o c código principal da aplicação (MVC, Traits, Repositories, Controllers, etc)
+├── docs/               # Pasta contento todas as documentações do projeto
+│   ├── wiki/           # Pasta contento regras e padrões de desenvolvimento, guia de rotas da API
+│   └── migration/      # Pasta contento o plano de migração e código fonte do projeto legado
+├── tests/              # Testes unitários e de feature
+└── ...                 # Outros arquivos do projeto (.env, composer.json, etc)
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalação do Projeto
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Pré-requisitos**
 
-## Learning Laravel
+[Docker](https://www.docker.com/get-started) e [Docker Compose](https://docs.docker.com/compose/)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Copie o arquivo de ambiente**
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+cp .env.example .env && cp .env.testing.example .env.testing 
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Instale as dependencias do projeto**
 
-## Laravel Sponsors
+Se não tiver o Composer instalado em seu computador, use o seguinte comando:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/opt \
+    -w /opt \
+    composer install
+```
 
-### Premium Partners
+Se já tiver o Composer instalado localmente, rode o comando:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+composer install
+```
 
-## Contributing
+- **Crie os containers e levante a aplicação**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+./vendor/bin/sail up -d
+```
 
-## Code of Conduct
+- **Gere a chave da aplicação**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+./vendor/bin/sail artisan key:generate
+```
 
-## Security Vulnerabilities
+- **Execute as migrations**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+./vendor/bin/sail artisan migrate
+```
 
-## License
+- **Popule o banco de dados**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+./vendor/bin/sail artisan db:seed
+```
+
+## Acesso
+
+- A API estará disponível em: [http://localhost](http://localhost) (ou a porta configurada no `docker-compose.yml`)
+
+## Comandos úteis
+
+- Parar containers: `./vendor/bin/sail down`
+- Rodar os testes: `./vendor/bin/sail test`
+
+## Plano de Migração
+
+O projeto segue um plano de migração, para mais detalhes acompanhar desse [DOCUMENTO](./docs/migration/MIGRATION.md) 
+
+## Wikipidia do projeto
+
+O projeto possui um wikipdia que serve de guia para o projeto seguir um padrão no seu desenvolvimento, para mais detalhes acessar esse [DOCUMENTO](./docs/wiki/README.md). Junto a isso, também é possivel acompanhar um guia de rotas das API nesse [DOCUMENTO](./docs/wiki/ROUTES.md)
+
+## Documentação Oficial do framework
+
+- [Laravel 12](https://laravel.com/docs/12.x).
