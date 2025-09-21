@@ -155,4 +155,11 @@ return [
     'uppercase'              => 'O campo :attribute deve estar em maiúsculas.',
     'url'                    => 'O formato de URL indicado para o campo :attribute é inválido.',
     'uuid'                   => ':Attribute deve ser um UUID válido.',
+    'cnpj'                   => [
+        'invalid-input'   => 'O campo :attribute deve conter um valor válido.',
+        'invalid-size'    => 'O campo :attribute deve conter 14 digitos.',
+        'repeated-value'  => 'O campo :attribute não deve conter numeros repetidos.',
+        'invalid-cnpj'    => 'O campo :attribute possui um valor invalido.',
+        'already-exists'  => 'O valor indicado para o campo :attribute já cadastrado no sistema.',
+    ],
 ];

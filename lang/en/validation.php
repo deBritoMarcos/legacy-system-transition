@@ -155,4 +155,11 @@ return [
     'uppercase'              => 'The :attribute field must be uppercase.',
     'url'                    => 'The :attribute field must be a valid URL.',
     'uuid'                   => 'The :attribute field must be a valid UUID.',
+    'cnpj'                   => [
+        'invalid-input'   => 'The :attribute field must contain a valid value.',
+        'invalid-size'    => 'The :attribute field must contain 14 digits.',
+        'repeated-value'  => 'The :attribute field must not contain repeated numbers.',
+        'invalid-cnpj'    => 'The :attribute field has an invalid value.',
+        'already-exists'  => 'The value indicated for the :attribute field already registered in the system.',
+    ],
 ];
