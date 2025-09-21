@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+use App\Http\Controllers\Api\Fornecedores\FornecedorResourceController;
+
+Route::prefix('/fornecedores')->name('fornecedores.')->group(function () {
+    Route::post('/salvar', [FornecedorResourceController::class, 'salvar'])->name('salvar');
+});
