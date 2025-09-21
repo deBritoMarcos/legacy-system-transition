@@ -32,10 +32,11 @@ Se não tiver o Composer instalado em seu computador, use o seguinte comando:
 
 ```bash
 docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v $(pwd):/opt \
-    -w /opt \
-    composer install
+  -u "$(id -u):$(id -g)" \
+  -v $(pwd):/opt \
+  -w /opt \
+  laravelsail/php83-composer:latest \
+  composer install
 ```
 
 Se já tiver o Composer instalado localmente, rode o comando:
