@@ -3,6 +3,31 @@
 use App\Models\Fornecedor;
 use Illuminate\Http\Response;
 
+test('`listar` lista fornecedores com filtro pelo nome', function () {
+    Fornecedor::factory(2)
+        ->sequence(
+            ['nome' => 'Fornecedor A'],
+            ['nome' => 'Fornecedor B']
+        )
+        ->create();
+
+    $response = $this->get(route('api.fornecedores.listar'), ['nome' => 'A']);
+
+    $response->assertOk();
+
+    $data = $response->getData(true)['data'];
+
+    expect($data[0]['nome'])->toBe('Fornecedor A');
+});
+
+test('`listar` mostre o erro 422 quando passado uma variável invalida', function ($nomeFiltro) {
+    $this->getJson(route('api.fornecedores.listar', ['nome' => $nomeFiltro]))
+        ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+})
+->with([
+    'nome maximo excedido' => [str_repeat('a', 256)],
+]);
+
 test('`salvar` salva fornecedor com sucesso', function () {
     $request = [
         'nome' => 'Fornecedor X',

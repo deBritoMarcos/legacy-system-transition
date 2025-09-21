@@ -1,9 +1,29 @@
 <?php
 
 use App\Dtos\Fornecedores\EncontrePorAtributoDto;
+use App\Dtos\Fornecedores\FiltrarFornecedorDto;
 use App\Models\Fornecedor;
 use App\Repositories\Fornecedores\Contratos\FornecedorEloquentRepositoryInterface;
 use App\Services\Fornecedores\BuscadorDeFornecedorService;
+use Illuminate\Support\Collection;
+
+test('`busqueMuitosFiltrandoEOrdernando` busca muitos fornecedores filtrando pelo nome', function () {
+    $mockRepo = Mockery::mock(FornecedorEloquentRepositoryInterface::class);
+    $mockRepo->shouldReceive('listarFiltrandoEOrdernando')
+        ->once()
+        ->withArgs(function(FiltrarFornecedorDto $dto) {
+            return $dto->nome == 'Fornecedor A'
+                && $dto->ordernarPor == 'created_at'
+                && $dto->ordernarDirecao == 'desc';
+        })
+        ->andReturn(collect([new Fornecedor(['nome' => 'Fornecedor A'])]));
+
+    $service = new BuscadorDeFornecedorService($mockRepo);
+
+    $result = $service->busqueMuitosFiltrandoEOrdernando(['nome' => 'Fornecedor A']);
+    expect($result)->toBeInstanceOf(Collection::class);
+    expect($result->first()->nome)->toBe('Fornecedor A');
+});
 
 test('`busqueUmPorAtributo` busca um fornecedor por atributo', function () {
     $mockRepo = Mockery::mock(FornecedorEloquentRepositoryInterface::class);
